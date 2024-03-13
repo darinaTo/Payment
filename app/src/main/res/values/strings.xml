@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Payment_app</string>
+    <string name="money">Money</string>
+    <string name="home">Home</string>
+    <string name="transaction">Transaction</string>
+    <string name="accounts">Accounts</string>
 </resources>
