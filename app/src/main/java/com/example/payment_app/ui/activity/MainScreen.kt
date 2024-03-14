@@ -1,6 +1,8 @@
 package com.example.payment_app.ui.activity
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CreditCard
@@ -33,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.payment_app.R
 import com.example.payment_app.domain.entities.networkEntities.card.Card
+import com.example.payment_app.ui.theme.Grey
 import com.example.payment_app.ui.theme.LightBlue
 import com.example.payment_app.ui.viewmodels.PaymentViewModel
 import com.example.payment_app.utils.BottomNavItem
@@ -54,10 +59,11 @@ fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val items = listOf(
-        BottomNavItem.Accounts, BottomNavItem.Card,
-        BottomNavItem.Home, BottomNavItem.Transaction
+        BottomNavItem.Home, BottomNavItem.Transaction,
+        BottomNavItem.Card,BottomNavItem.Accounts
     )
-    Scaffold(topBar = {
+    Scaffold(
+        topBar = {
         TopBarNavigation()
     },
         bottomBar = {
@@ -74,7 +80,8 @@ fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarNavigation() {
-    TopAppBar(title = {
+    TopAppBar(
+        title = {
         Text(
             text = stringResource(R.string.money),
             fontSize = 30.sp,
@@ -127,6 +134,7 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
                     indicatorColor = MaterialTheme.colorScheme.surfaceColorAtElevation(
                         LocalAbsoluteTonalElevation.current
                     ),
+                    unselectedIconColor = Grey,
                     selectedTextColor = LightBlue
                 ),
                 modifier = Modifier.padding(horizontal = 4.dp)
@@ -140,7 +148,7 @@ fun BaseScreen(modifier: Modifier, cards: List<Card>) {
     Column(modifier = modifier) {
         TopScreenPayment(
             modifier = Modifier.padding(
-                vertical = 8.dp,
+                vertical = 10.dp,
                 horizontal = 16.dp
             )
         )
@@ -156,11 +164,13 @@ fun BaseScreen(modifier: Modifier, cards: List<Card>) {
 
 @Composable
 fun TopScreenPayment(modifier: Modifier) {
-    Card(
+    Box(
         modifier = modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface)
+            .clip(RoundedCornerShape(3.dp))
     ) {
-        Column(modifier = Modifier.padding(4.dp)) {
+        Column(modifier = Modifier.padding(14.dp)) {
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
@@ -186,9 +196,12 @@ fun TopScreenPayment(modifier: Modifier) {
 
 @Composable
 fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
-    Card(
+    Column(
         modifier = modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface)
+            .clip(RoundedCornerShape(3.dp))
+
     ) {
         Row(
             modifier = Modifier
@@ -209,7 +222,8 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
                 textDecoration = TextDecoration.Underline
             )
         }
-        LazyColumn() {
+        Spacer(Modifier.height(5.dp))
+        LazyColumn {
             items(cards) { card ->
                 CardItem(
                     name = card.cardName,
@@ -223,6 +237,8 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
 
 @Composable
 fun TransactionPaymentScreen() {
+Card{
 
+}
 }
 

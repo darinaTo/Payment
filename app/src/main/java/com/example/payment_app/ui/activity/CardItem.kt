@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,9 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.payment_app.ui.theme.Grey
+import com.example.payment_app.ui.theme.LightBlack
 
 
 @Composable
@@ -33,24 +38,25 @@ fun CardItem(name: String, logo: String, last4: String) {
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
     ) {
-        Card(
+        CardScreen(
             logo = logo,
             last4 = last4
         )
 
-        Text(text = name)
+        Text(text = name,
+            style = MaterialTheme.typography.labelLarge,
+            textAlign = TextAlign.Left)
         Spacer(Modifier.weight(1f))
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
             contentDescription = "see detail",
-
-            )
+            tint = Grey)
     }
 
 }
 
 @Composable
-fun Card(
+fun CardScreen(
     iconSize: Dp = 30.dp,
     cardWidth: Dp = 50.dp,
     cardHeight: Dp = 35.dp,
@@ -67,9 +73,18 @@ fun Card(
             modifier = Modifier
                 .size(width = cardWidth, height = cardHeight)
                 .clip(RoundedCornerShape(3.dp))
-                .background(Color.Gray)
+                .background(LightBlack)
 
-        )
+        ) {
+            Text(
+                text = last4,
+                color = Color.White,
+                fontSize = 10.sp,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .align(Alignment.BottomEnd)
+            )
+        }
         AsyncImage(
             model = logo,
             contentDescription = "logo",
@@ -80,5 +95,6 @@ fun Card(
                 .offset(y = cardHeight / 3, x = cardWidth / 10)
                 .clip(CircleShape)
         )
+
     }
 }
