@@ -63,6 +63,7 @@ fun CardScreen(
     logo: String,
     last4: String
 ) {
+    //TODO: Row -> horizontalArrangement = ArrangementAbsolute.Left
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier

@@ -78,7 +78,7 @@ fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
         BaseScreen(
             modifier = Modifier.padding(paddingValues),
             cards = uiState.cards,
-            transaction = uiState.transaction,
+            transactions = uiState.transaction,
             commonModifier = commonModifier
         )
     }
@@ -154,7 +154,7 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
 fun BaseScreen(
     modifier: Modifier, cards: List<Card>,
     commonModifier: Modifier,
-    transaction: List<Transaction>
+    transactions: List<Transaction>
 ) {
     Column(
         modifier = modifier
@@ -172,6 +172,7 @@ fun BaseScreen(
             modifier = commonModifier,
         )
         TransactionPaymentScreen(
+            transactions = transactions,
             modifier = commonModifier
         )
     }
@@ -230,9 +231,20 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
 }
 
 @Composable
-fun TransactionPaymentScreen(modifier: Modifier) {
-    Column (modifier = modifier){
+fun TransactionPaymentScreen(modifier: Modifier, transactions: List<Transaction>) {
+    Column(modifier = modifier) {
         HeadOfSectionScreen(text = stringResource(R.string.recent_transaction))
+        LazyColumn {
+            items(transactions) { transaction ->
+                TransactionItem(
+                    modifier = modifier,
+                    last4 = transaction.card?.cardLast4,
+                    amount = transaction.amount,
+                    logo = transaction.card?.cardHolder?.logoUrl,
+                    name = transaction.card?.cardName
+                )
+            }
+        }
     }
 }
 
