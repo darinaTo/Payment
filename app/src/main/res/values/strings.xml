@@ -4,4 +4,6 @@
     <string name="home">Home</string>
     <string name="transaction">Transaction</string>
     <string name="accounts">Accounts</string>
+    <string name="my_cards">My cards</string>
+    <string name="see_all">See All</string>
 </resources>

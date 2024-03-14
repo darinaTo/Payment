@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.payment_app.R
@@ -126,27 +127,29 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
 @Composable
 fun BaseScreen(modifier: Modifier) {
     Column(modifier = modifier) {
-        TopPayment()
+        TopScreenPayment()
+        MediumScreenPayment()
     }
 }
 
 @Composable
-fun TopPayment() {
+fun TopScreenPayment() {
     Card(
         modifier = Modifier
+            .padding(16.dp)
             .fillMaxWidth()
-            .padding(14.dp)
 
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Row (
+            Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
-            ){
+            ) {
                 Icon(imageVector = Icons.Default.CreditCard, contentDescription = "currency")
                 Text(
                     text = "USD account",
                     fontSize = 15.sp,
+                    modifier = Modifier.padding(6.dp)
                 )
             }
             Spacer(modifier = Modifier.height(6.dp))
@@ -154,8 +157,37 @@ fun TopPayment() {
                 text = "$100,000",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium
             )
         }
+    }
+}
+
+@Composable
+fun MediumScreenPayment() {
+    Card(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.my_cards),
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = stringResource(R.string.see_all),
+                fontSize = 14.sp,
+                textDecoration = TextDecoration.Underline
+            )
         }
+        CardItem()
+    }
 }
 
