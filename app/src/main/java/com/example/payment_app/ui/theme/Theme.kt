@@ -27,13 +27,19 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40,
 
-    background = Color(0xFFFFFBFE),
+    background = Color(0xFFF4F4F4),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
+    surfaceVariant = Color.White,
+    secondaryContainer = Color.White,
+    onSecondaryContainer = Color.White,
+    tertiaryContainer = Color.White,
+    onTertiaryContainer = Color.White,
+    primaryContainer = Color.White
 )
 
 @Composable
