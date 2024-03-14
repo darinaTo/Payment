@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CreditCard
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -60,19 +59,25 @@ fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
 
     val items = listOf(
         BottomNavItem.Home, BottomNavItem.Transaction,
-        BottomNavItem.Card,BottomNavItem.Accounts
+        BottomNavItem.Card, BottomNavItem.Accounts
     )
+    val commonModifier = Modifier
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(10.dp))
+        .background(MaterialTheme.colorScheme.surface)
+
     Scaffold(
         topBar = {
-        TopBarNavigation()
-    },
+            TopBarNavigation()
+        },
         bottomBar = {
             BottomBarNavigation(items = items)
 
         }) { paddingValues ->
         BaseScreen(
             modifier = Modifier.padding(paddingValues),
-            cards = uiState.cards
+            cards = uiState.cards,
+            commonModifier = commonModifier
         )
     }
 }
@@ -82,30 +87,30 @@ fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
 fun TopBarNavigation() {
     TopAppBar(
         title = {
-        Text(
-            text = stringResource(R.string.money),
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-    }, actions = {
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "add",
-                modifier = Modifier.size(20.dp)
+            Text(
+                text = stringResource(R.string.money),
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
             )
-        }
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(
-                painter = painterResource(R.drawable.account_balance),
-                contentDescription = "bank",
-                modifier = Modifier.size(20.dp)
+        }, actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "add",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(R.drawable.account_balance),
+                    contentDescription = "bank",
+                    modifier = Modifier.size(20.dp)
 
-            )
-        }
+                )
+            }
 
-    })
+        })
 }
 
 @Composable
@@ -144,23 +149,31 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
 }
 
 @Composable
-fun BaseScreen(modifier: Modifier, cards: List<Card>) {
-    Column(modifier = modifier) {
-        TopScreenPayment(
-            modifier = Modifier.padding(
-                vertical = 10.dp,
+fun BaseScreen(
+    modifier: Modifier, cards: List<Card>,
+    commonModifier: Modifier
+) {
+    Column(
+        modifier = modifier
+            .padding(
+                vertical = 24.dp,
                 horizontal = 16.dp
-            )
+            ),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        TopScreenPayment(
+            modifier = commonModifier
         )
         CardsScreenPayment(
             cards = cards,
-            modifier = Modifier.padding(
-                vertical = 14.dp,
-                horizontal = 16.dp
-            ),
+            modifier = commonModifier,
+        )
+        TransactionPaymentScreen(
+            modifier = commonModifier
         )
     }
 }
+
 
 @Composable
 fun TopScreenPayment(modifier: Modifier) {
@@ -198,31 +211,8 @@ fun TopScreenPayment(modifier: Modifier) {
 fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
-            .clip(RoundedCornerShape(3.dp))
-
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(R.string.my_cards),
-                fontWeight = FontWeight.Bold,
-
-                )
-            Text(
-                text = stringResource(R.string.see_all),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                textDecoration = TextDecoration.Underline
-            )
-        }
-        Spacer(Modifier.height(5.dp))
+        HeadOfSectionScreen(text = stringResource(R.string.my_cards))
         LazyColumn {
             items(cards) { card ->
                 CardItem(
@@ -236,9 +226,34 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
 }
 
 @Composable
-fun TransactionPaymentScreen() {
-Card{
+fun TransactionPaymentScreen(modifier: Modifier) {
+    Column (modifier = modifier){
+        HeadOfSectionScreen(text = stringResource(R.string.recent_transaction))
 
+    }
 }
+
+
+@Composable
+fun HeadOfSectionScreen(text: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = text,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = stringResource(R.string.see_all),
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            textDecoration = TextDecoration.Underline,
+            color = Grey
+        )
+    }
 }
 
