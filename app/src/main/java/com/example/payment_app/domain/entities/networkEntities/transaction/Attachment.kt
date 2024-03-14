@@ -2,7 +2,7 @@ package com.example.payment_app.domain.entities.networkEntities.transaction
 
 data class Attachment(
     val createdAt: String,
-    val deletedAt: Any,
+    val deletedAt: Any?,
     val externalTransactionId: String,
     val fileName: String,
     val fileSize: String,

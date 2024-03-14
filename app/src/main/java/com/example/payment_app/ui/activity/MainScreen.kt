@@ -47,6 +47,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.payment_app.R
 import com.example.payment_app.domain.entities.networkEntities.card.Card
+import com.example.payment_app.domain.entities.networkEntities.transaction.Transaction
 import com.example.payment_app.ui.theme.Grey
 import com.example.payment_app.ui.theme.LightBlue
 import com.example.payment_app.ui.viewmodels.PaymentViewModel
@@ -77,6 +78,7 @@ fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
         BaseScreen(
             modifier = Modifier.padding(paddingValues),
             cards = uiState.cards,
+            transaction = uiState.transaction,
             commonModifier = commonModifier
         )
     }
@@ -151,7 +153,8 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
 @Composable
 fun BaseScreen(
     modifier: Modifier, cards: List<Card>,
-    commonModifier: Modifier
+    commonModifier: Modifier,
+    transaction: List<Transaction>
 ) {
     Column(
         modifier = modifier
@@ -196,6 +199,7 @@ fun TopScreenPayment(modifier: Modifier) {
                     style = MaterialTheme.typography.labelLarge
                 )
             }
+            //TODO:space by
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = "$100,000",
@@ -229,7 +233,6 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
 fun TransactionPaymentScreen(modifier: Modifier) {
     Column (modifier = modifier){
         HeadOfSectionScreen(text = stringResource(R.string.recent_transaction))
-
     }
 }
 

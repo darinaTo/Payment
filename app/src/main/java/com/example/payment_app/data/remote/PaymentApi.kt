@@ -9,5 +9,5 @@ interface PaymentApi {
     suspend fun getCards() : CardApiEntity
 
     @GET("cards/transactions")
-    suspend fun getTransaction() : List<TransactionApiEntity>
+    suspend fun getTransaction() : TransactionApiEntity
 }
