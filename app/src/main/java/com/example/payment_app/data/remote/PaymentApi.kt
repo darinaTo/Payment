@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface PaymentApi {
     @GET("cards")
-    suspend fun getCards() : List<CardApiEntity>
+    suspend fun getCards() : CardApiEntity
 
     @GET("cards/transactions")
     suspend fun getTransaction() : List<TransactionApiEntity>

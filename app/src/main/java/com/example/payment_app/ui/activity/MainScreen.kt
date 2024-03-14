@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CreditCard
@@ -38,13 +40,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.payment_app.R
+import com.example.payment_app.domain.entities.networkEntities.card.Card
 import com.example.payment_app.ui.theme.LightBlue
-import com.example.payment_app.util.BottomNavItem
+import com.example.payment_app.ui.viewmodels.PaymentViewModel
+import com.example.payment_app.utils.BottomNavItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainPage() {
+fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     val items = listOf(
         BottomNavItem.Accounts, BottomNavItem.Card,
         BottomNavItem.Home, BottomNavItem.Transaction
@@ -56,7 +64,10 @@ fun MainPage() {
             BottomBarNavigation(items = items)
 
         }) { paddingValues ->
-        BaseScreen(modifier = Modifier.padding(paddingValues))
+        BaseScreen(
+            modifier = Modifier.padding(paddingValues),
+            cards = uiState.cards
+        )
     }
 }
 
@@ -125,22 +136,31 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
 }
 
 @Composable
-fun BaseScreen(modifier: Modifier) {
+fun BaseScreen(modifier: Modifier, cards: List<Card>) {
     Column(modifier = modifier) {
-        TopScreenPayment()
-        MediumScreenPayment()
+        TopScreenPayment(
+            modifier = Modifier.padding(
+                vertical = 8.dp,
+                horizontal = 16.dp
+            )
+        )
+        CardsScreenPayment(
+            cards = cards,
+            modifier = Modifier.padding(
+                vertical = 14.dp,
+                horizontal = 16.dp
+            ),
+        )
     }
 }
 
 @Composable
-fun TopScreenPayment() {
+fun TopScreenPayment(modifier: Modifier) {
     Card(
-        modifier = Modifier
-            .padding(16.dp)
+        modifier = modifier
             .fillMaxWidth()
-
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(4.dp)) {
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
@@ -149,7 +169,8 @@ fun TopScreenPayment() {
                 Text(
                     text = "USD account",
                     fontSize = 15.sp,
-                    modifier = Modifier.padding(6.dp)
+                    modifier = Modifier.padding(6.dp),
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
             Spacer(modifier = Modifier.height(6.dp))
@@ -164,10 +185,9 @@ fun TopScreenPayment() {
 }
 
 @Composable
-fun MediumScreenPayment() {
+fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
     Card(
-        modifier = Modifier
-            .padding(16.dp)
+        modifier = modifier
             .fillMaxWidth()
     ) {
         Row(
@@ -179,15 +199,30 @@ fun MediumScreenPayment() {
         ) {
             Text(
                 text = stringResource(R.string.my_cards),
-                fontWeight = FontWeight.Bold
-            )
+                fontWeight = FontWeight.Bold,
+
+                )
             Text(
                 text = stringResource(R.string.see_all),
                 fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
                 textDecoration = TextDecoration.Underline
             )
         }
-        CardItem()
+        LazyColumn() {
+            items(cards) { card ->
+                CardItem(
+                    name = card.cardName,
+                    logo = card.cardHolder.logoUrl,
+                    last4 = card.cardLast4
+                )
+            }
+        }
     }
+}
+
+@Composable
+fun TransactionPaymentScreen() {
+
 }
 

@@ -1,4 +1,4 @@
-package com.example.payment_app.domain.entities.networkEntities.transaction
+package com.example.payment_app.domain.entities.networkEntities.card
 
 data class Card(
     val cardHolder: CardHolder,

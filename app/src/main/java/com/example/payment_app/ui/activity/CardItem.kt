@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,21 +19,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 
 
 @Composable
-fun CardItem() {
+fun CardItem(name: String, logo: String, last4: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(14.dp)
+            .padding(horizontal = 8.dp)
     ) {
-    Card()
+        Card(
+            logo = logo,
+            last4 = last4
+        )
 
-        Text(text = "Slack")
+        Text(text = name)
         Spacer(Modifier.weight(1f))
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
@@ -44,27 +49,36 @@ fun CardItem() {
 
 }
 
-
-@Preview(showBackground = true)
 @Composable
-fun CardItemPreview() {
-    CardItem()
-}
+fun Card(
+    iconSize: Dp = 30.dp,
+    cardWidth: Dp = 50.dp,
+    cardHeight: Dp = 35.dp,
+    logo: String,
+    last4: String
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .size(iconSize + cardHeight + cardWidth / 4.5f)
+    ) {
 
-@Composable
-fun Card() {
         Box(
             modifier = Modifier
-                .size(width = 50.dp, height = 35.dp)
+                .size(width = cardWidth, height = cardHeight)
                 .clip(RoundedCornerShape(3.dp))
                 .background(Color.Gray)
 
         )
-        Icon(
-            imageVector = Icons.Rounded.AddCircle,
-            contentDescription = null,
+        AsyncImage(
+            model = logo,
+            contentDescription = "logo",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(25.dp)
-                .offset(y = (-15).dp, x = (-60).dp)
+                .size(iconSize)
+                .align(Alignment.TopStart)
+                .offset(y = cardHeight / 3, x = cardWidth / 10)
+                .clip(CircleShape)
         )
+    }
 }

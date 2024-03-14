@@ -1,4 +1,4 @@
-package com.example.payment_app.util
+package com.example.payment_app.utils
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountBox
