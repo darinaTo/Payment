@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PaymentViewModel @Inject constructor(
-    private val cardRepository: PaymentRepository
+    private val paymentRepository: PaymentRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -28,7 +28,7 @@ class PaymentViewModel @Inject constructor(
     }
 
     private suspend fun getCard() {
-        val cardList = cardRepository.getCardList()
+        val cardList = paymentRepository.getCardList()
         if (cardList.isSuccess) {
             _uiState.update {
                 it.copy(
@@ -42,7 +42,7 @@ class PaymentViewModel @Inject constructor(
     }
 
     private suspend fun getTransaction() {
-        val transaction = cardRepository.getTransaction()
+        val transaction = paymentRepository.getTransaction()
         if (transaction.isSuccess) {
             _uiState.update {
                 it.copy(

@@ -1,5 +1,6 @@
 package com.example.payment_app.ui.activity
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,7 +47,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.payment_app.R
 import com.example.payment_app.domain.entities.networkEntities.card.Card
-import com.example.payment_app.domain.entities.networkEntities.transaction.Transaction
+import com.example.payment_app.domain.entities.uiEntity.TransactionEntityUi
 import com.example.payment_app.ui.theme.Grey
 import com.example.payment_app.ui.theme.LightBlue
 import com.example.payment_app.ui.viewmodels.PaymentViewModel
@@ -125,7 +125,7 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
                 onClick = { selectedItemIndex = index },
                 icon = {
                     Icon(
-                        imageVector = item.icon,
+                        painter = painterResource(item.icon),
                         contentDescription = item.title,
                         modifier = Modifier.size(30.dp)
                     )
@@ -154,7 +154,7 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
 fun BaseScreen(
     modifier: Modifier, cards: List<Card>,
     commonModifier: Modifier,
-    transactions: List<Transaction>
+    transactions: List<TransactionEntityUi>
 ) {
     Column(
         modifier = modifier
@@ -183,16 +183,14 @@ fun BaseScreen(
 fun TopScreenPayment(modifier: Modifier) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
-            .clip(RoundedCornerShape(3.dp))
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(imageVector = Icons.Default.CreditCard, contentDescription = "currency")
+                Image(painter = painterResource(R.drawable.united_states_of_america),
+                    contentDescription = "currency")
                 Text(
                     text = "USD account",
                     fontSize = 15.sp,
@@ -231,17 +229,17 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
 }
 
 @Composable
-fun TransactionPaymentScreen(modifier: Modifier, transactions: List<Transaction>) {
+fun TransactionPaymentScreen(modifier: Modifier, transactions: List<TransactionEntityUi>) {
     Column(modifier = modifier) {
         HeadOfSectionScreen(text = stringResource(R.string.recent_transaction))
         LazyColumn {
             items(transactions) { transaction ->
                 TransactionItem(
                     modifier = modifier,
-                    last4 = transaction.card?.cardLast4,
+                    last4 = transaction.card.cardLast4,
                     amount = transaction.amount,
-                    logo = transaction.card?.cardHolder?.logoUrl,
-                    name = transaction.card?.cardName
+                    logo = transaction.card.cardHolder.logoUrl,
+                    name = transaction.card.cardName
                 )
             }
         }
