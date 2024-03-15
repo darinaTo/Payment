@@ -1,4 +1,4 @@
-package com.example.payment_app.ui.activity
+package com.example.payment_app.ui.activity.mainPage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

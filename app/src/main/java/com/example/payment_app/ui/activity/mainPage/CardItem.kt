@@ -1,4 +1,4 @@
-package com.example.payment_app.ui.activity
+package com.example.payment_app.ui.activity.mainPage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +32,7 @@ import com.example.payment_app.ui.theme.LightBlack
 
 
 @Composable
-fun CardItem(name: String, logo: String, last4: String) {
+fun CardItem(name: String, logo: String, last4: String, onIconTap: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -47,10 +48,12 @@ fun CardItem(name: String, logo: String, last4: String) {
             style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Left)
         Spacer(Modifier.weight(1f))
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-            contentDescription = "see detail",
-            tint = Grey)
+        IconButton(onClick = { onIconTap() }) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                contentDescription = "see detail",
+                tint = Grey)
+        }
     }
 
 }

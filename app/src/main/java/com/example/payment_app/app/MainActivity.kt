@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.payment_app.data.constants.Constants.CARD_SCREEN_ROUTE
 import com.example.payment_app.data.constants.Constants.MAIN_SCREEN_ROUTE
-import com.example.payment_app.ui.activity.MainPage
+import com.example.payment_app.ui.activity.cardPage.CardScreen
+import com.example.payment_app.ui.activity.mainPage.MainScreen
 import com.example.payment_app.ui.theme.Payment_appTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,13 +19,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
         Payment_appTheme {
-            val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = MAIN_SCREEN_ROUTE) {
-                composable(MAIN_SCREEN_ROUTE) {
-                    MainPage()
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = MAIN_SCREEN_ROUTE) {
+                    composable(MAIN_SCREEN_ROUTE) {
+                        MainScreen(onIconTap = {
+                            navController.navigate(CARD_SCREEN_ROUTE)
+                        })
+                    }
+                    composable(CARD_SCREEN_ROUTE) {
+                        CardScreen()
+                    }
                 }
             }
-        }
+
         }
     }
 }

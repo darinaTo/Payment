@@ -1,4 +1,4 @@
-package com.example.payment_app.ui.activity
+package com.example.payment_app.ui.activity.mainPage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,7 +46,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.payment_app.R
-import com.example.payment_app.domain.entities.networkEntities.card.Card
+import com.example.payment_app.data.constants.BOTTOM_NAV_ITEMS
+import com.example.payment_app.domain.entities.networkEntities.card.CardsApiEntity
 import com.example.payment_app.domain.entities.uiEntity.TransactionEntityUi
 import com.example.payment_app.ui.theme.Grey
 import com.example.payment_app.ui.theme.LightBlue
@@ -55,13 +56,12 @@ import com.example.payment_app.utils.BottomNavItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
+fun MainScreen(
+    onIconTap : () -> Unit,
+    viewModel: PaymentViewModel = hiltViewModel()
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val items = listOf(
-        BottomNavItem.Home, BottomNavItem.Transaction,
-        BottomNavItem.Card, BottomNavItem.Accounts
-    )
     val commonModifier = Modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(10.dp))
@@ -72,11 +72,12 @@ fun MainPage(viewModel: PaymentViewModel = hiltViewModel()) {
             TopBarNavigation()
         },
         bottomBar = {
-            BottomBarNavigation(items = items)
+            BottomBarNavigation(items = BOTTOM_NAV_ITEMS)
 
         }) { paddingValues ->
         BaseScreen(
             modifier = Modifier.padding(paddingValues),
+            onIconTap = onIconTap,
             cards = uiState.cards,
             transactions = uiState.transaction,
             commonModifier = commonModifier
@@ -152,9 +153,10 @@ fun BottomBarNavigation(items: List<BottomNavItem>) {
 
 @Composable
 fun BaseScreen(
-    modifier: Modifier, cards: List<Card>,
+    modifier: Modifier, cards: List<CardsApiEntity>,
     commonModifier: Modifier,
-    transactions: List<TransactionEntityUi>
+    transactions: List<TransactionEntityUi>,
+    onIconTap: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -168,6 +170,7 @@ fun BaseScreen(
             modifier = commonModifier
         )
         CardsScreenPayment(
+            onIconTap = onIconTap,
             cards = cards,
             modifier = commonModifier,
         )
@@ -211,7 +214,7 @@ fun TopScreenPayment(modifier: Modifier) {
 }
 
 @Composable
-fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
+fun CardsScreenPayment(modifier: Modifier, cards: List<CardsApiEntity>, onIconTap: () -> Unit) {
     Column(
         modifier = modifier
     ) {
@@ -219,6 +222,7 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<Card>) {
         LazyColumn {
             items(cards) { card ->
                 CardItem(
+                    onIconTap = onIconTap,
                     name = card.cardName,
                     logo = card.cardHolder.logoUrl,
                     last4 = card.cardLast4
