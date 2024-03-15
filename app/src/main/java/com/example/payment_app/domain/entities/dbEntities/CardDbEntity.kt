@@ -15,10 +15,11 @@ import com.example.payment_app.data.constants.Constants.CARD_TABLE
     )])
 data class CardDbEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "transactionId")
-    val transactionId : Int,
     @ColumnInfo(name = "id") val id: Int = 0,
-    @ColumnInfo(name = "holder") val logo: String,
+    @ColumnInfo(name = "cardId") val cardId : String,
+    @ColumnInfo(name = "transactionId")
+    val transactionId : String,
+    @ColumnInfo(name = "logo") val logo: String,
     @ColumnInfo(name = "Last4") val last4: String,
     @ColumnInfo(name = "name") val name: String,
 )
