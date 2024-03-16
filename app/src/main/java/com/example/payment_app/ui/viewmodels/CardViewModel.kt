@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.payment_app.data.impl.PaymentRepository
+import com.example.payment_app.utils.Status
 import com.example.payment_app.utils.UiStateCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,8 @@ class CardViewModel @Inject constructor(
 
     private suspend fun getFullInfo() {
         paymentRepository.getTransactionByCardID(id).onEach {info  ->
-            _uiState.update { it.copy(fullInfo = info) }
+            _uiState.update { it.copy(fullInfo = info,
+                status = Status.SUCCESS) }
         }.launchIn(viewModelScope)
     }
 }

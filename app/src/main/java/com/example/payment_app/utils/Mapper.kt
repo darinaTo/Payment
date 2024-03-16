@@ -6,6 +6,7 @@ import com.example.payment_app.domain.entities.networkEntities.card.CardsApiEnti
 import com.example.payment_app.domain.entities.networkEntities.transaction.Transaction
 import com.example.payment_app.domain.entities.uiEntity.TransactionEntityUi
 
+
 fun List<Transaction>.mapToUEntity(): List<TransactionEntityUi> =
     this.mapNotNull { transaction ->
         transaction.card?.let { card ->
@@ -18,15 +19,6 @@ fun List<Transaction>.mapToUEntity(): List<TransactionEntityUi> =
         }
     }
 
-fun List<TransactionEntityUi>.mapToDbEntity() : List<TransactionDbEntity> =
-    this.map {transaction ->
-            TransactionDbEntity(
-                id = transaction.id,
-                amount = transaction.amount,
-                createData = transaction.createData
-            )
-        }
-
 fun CardsApiEntity.mapToDbEntity(transactionId : String) : CardDbEntity =
     CardDbEntity(
         transactionId = transactionId,
@@ -35,3 +27,13 @@ fun CardsApiEntity.mapToDbEntity(transactionId : String) : CardDbEntity =
         last4 = cardLast4,
         name = cardName
     )
+
+fun List<TransactionEntityUi>.mapToDbEntity() : List<TransactionDbEntity> =
+    this.map {transaction ->
+            TransactionDbEntity(
+                id = transaction.id,
+                amount = transaction.amount,
+                createData = transaction.createData,
+                carId = transaction.card.id
+            )
+        }

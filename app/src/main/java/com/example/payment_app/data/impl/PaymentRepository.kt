@@ -32,7 +32,7 @@ class PaymentRepository @Inject constructor(
         runCatching {
             api.getTransaction().transactions.mapToUEntity()
         }.onSuccess { transaction ->
-           saveData(transaction)
+            saveData(transaction)
             Result.success(transaction)
         }.onFailure { ex ->
             Result.failure<Exception>(ex)
@@ -47,7 +47,7 @@ suspend fun getTransactionByCardID(cardId : String) : Flow<List<PaymentFullInfo>
         val toDbEntity = transition.mapToDbEntity()
         dao.insertAllTransaction(toDbEntity)
         transition.map { item ->
-            dao.insertCard(item.card.mapToDbEntity(item.id))
+                dao.insertCard(item.card.mapToDbEntity(item.id))
         }
     }
 }

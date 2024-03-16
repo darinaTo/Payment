@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     composable("$CARD_SCREEN_ROUTE/{id}",
                         arguments = paymentArg) {
                         CardScreen(
-                            onArrowBackClick = {navController.navigate(MAIN_SCREEN_ROUTE)}
+                            onArrowBackClick = {navController.popBackStack()}
                         )
                     }
                 }
