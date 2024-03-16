@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -25,6 +26,9 @@ class CardViewModel @Inject constructor(
     private val id : String
     init {
         id = requireNotNull(savedStateHandle.get<String>("id"))
+        viewModelScope.launch {
+            getFullInfo()
+        }
     }
 
 

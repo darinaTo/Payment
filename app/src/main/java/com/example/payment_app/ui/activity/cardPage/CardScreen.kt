@@ -1,5 +1,6 @@
 package com.example.payment_app.ui.activity.cardPage
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -13,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.example.payment_app.data.constants.BOTTOM_NAV_ITEMS
 import com.example.payment_app.ui.activity.mainPage.BottomBarNavigation
 import com.example.payment_app.ui.viewmodels.CardViewModel
@@ -27,12 +30,20 @@ fun CardScreen(
     onArrowBackClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    uiState.fullInfo
+    val card = uiState.fullInfo.first().card
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-
+                    Row {
+                        AsyncImage(
+                            model = card.logo,
+                            contentDescription = "logo",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = { onArrowBackClick() }) {
