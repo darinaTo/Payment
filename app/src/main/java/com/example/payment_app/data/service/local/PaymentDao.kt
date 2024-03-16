@@ -18,7 +18,7 @@ interface PaymentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCard(cars : CardDbEntity)
 
-    @Query("SELECT * FROM card")
+    @Query("SELECT DISTINCT * FROM card GROUP BY cardId")
     fun getAllCards() : Flow<List<CardDbEntity>>
 
     @Query("SELECT * FROM `transaction`")

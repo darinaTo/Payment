@@ -61,14 +61,14 @@ fun CardScreen(
                         title = {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                horizontalArrangement = Arrangement.spacedBy(18.dp)
                             ) {
                                 AsyncImage(
                                     model = card.logo,
                                     contentDescription = "logo",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
-                                        .size(10.dp)
+                                        .size(50.dp)
                                         .clip(CircleShape)
 
                                 )

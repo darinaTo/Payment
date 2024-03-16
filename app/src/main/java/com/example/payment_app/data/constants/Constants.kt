@@ -10,6 +10,8 @@ object Constants {
     const val BASE_URL = "https://dev.spendbase.co/"
     const val TRANSACTION_TABLE = "transaction"
     const val CARD_TABLE = "card"
+    const val ERROR_MESSAGE = "Some trouble with network connection"
+
     val paymentArg = listOf(
         navArgument("id") {
             type = NavType.StringType
