@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.payment_app.data.constants.Constants.CARD_SCREEN_ROUTE
 import com.example.payment_app.data.constants.Constants.MAIN_SCREEN_ROUTE
+import com.example.payment_app.data.constants.Constants.paymentArg
 import com.example.payment_app.ui.activity.cardPage.CardScreen
 import com.example.payment_app.ui.activity.mainPage.MainScreen
 import com.example.payment_app.ui.theme.Payment_appTheme
@@ -22,12 +23,15 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = MAIN_SCREEN_ROUTE) {
                     composable(MAIN_SCREEN_ROUTE) {
-                        MainScreen(onIconTap = {
-                            navController.navigate(CARD_SCREEN_ROUTE)
+                        MainScreen(onIconTap = { id->
+                            navController.navigate("$CARD_SCREEN_ROUTE/${id}")
                         })
                     }
-                    composable(CARD_SCREEN_ROUTE) {
-                        CardScreen()
+                    composable("$CARD_SCREEN_ROUTE/{id}",
+                        arguments = paymentArg) {
+                        CardScreen(
+                            onArrowBackClick = {navController.navigate(MAIN_SCREEN_ROUTE)}
+                        )
                     }
                 }
             }

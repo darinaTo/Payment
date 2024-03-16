@@ -27,12 +27,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.payment_app.domain.entities.networkEntities.card.CardsApiEntity
 import com.example.payment_app.ui.theme.Grey
 import com.example.payment_app.ui.theme.LightBlack
 
 
 @Composable
-fun CardItem(name: String, logo: String, last4: String, onIconTap: () -> Unit) {
+fun CardItem(cards: CardsApiEntity, onIconTap: (String) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -40,15 +41,15 @@ fun CardItem(name: String, logo: String, last4: String, onIconTap: () -> Unit) {
             .padding(horizontal = 8.dp)
     ) {
         CardScreen(
-            logo = logo,
-            last4 = last4
+            logo = cards.cardHolder.logoUrl,
+            last4 = cards.cardLast4
         )
 
-        Text(text = name,
+        Text(text = cards.cardName,
             style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Left)
         Spacer(Modifier.weight(1f))
-        IconButton(onClick = { onIconTap() }) {
+        IconButton(onClick = { onIconTap(cards.id) }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                 contentDescription = "see detail",

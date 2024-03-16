@@ -57,7 +57,7 @@ import com.example.payment_app.utils.BottomNavItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    onIconTap : () -> Unit,
+    onIconTap : (String) -> Unit,
     viewModel: PaymentViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -156,7 +156,7 @@ fun BaseScreen(
     modifier: Modifier, cards: List<CardsApiEntity>,
     commonModifier: Modifier,
     transactions: List<TransactionEntityUi>,
-    onIconTap: () -> Unit
+    onIconTap: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -214,7 +214,7 @@ fun TopScreenPayment(modifier: Modifier) {
 }
 
 @Composable
-fun CardsScreenPayment(modifier: Modifier, cards: List<CardsApiEntity>, onIconTap: () -> Unit) {
+fun CardsScreenPayment(modifier: Modifier, cards: List<CardsApiEntity>, onIconTap: (String) -> Unit) {
     Column(
         modifier = modifier
     ) {
@@ -223,9 +223,7 @@ fun CardsScreenPayment(modifier: Modifier, cards: List<CardsApiEntity>, onIconTa
             items(cards) { card ->
                 CardItem(
                     onIconTap = onIconTap,
-                    name = card.cardName,
-                    logo = card.cardHolder.logoUrl,
-                    last4 = card.cardLast4
+                    cards = card
                 )
             }
         }

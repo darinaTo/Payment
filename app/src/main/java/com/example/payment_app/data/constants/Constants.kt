@@ -1,5 +1,7 @@
 package com.example.payment_app.data.constants
 
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.payment_app.utils.BottomNavItem
 
 object Constants {
@@ -8,6 +10,11 @@ object Constants {
     const val BASE_URL = "https://dev.spendbase.co/"
     const val TRANSACTION_TABLE = "transaction"
     const val CARD_TABLE = "card"
+    val paymentArg = listOf(
+        navArgument("id") {
+            type = NavType.StringType
+        }
+    )
 }
 val BOTTOM_NAV_ITEMS = listOf(
     BottomNavItem.Home, BottomNavItem.Transaction,

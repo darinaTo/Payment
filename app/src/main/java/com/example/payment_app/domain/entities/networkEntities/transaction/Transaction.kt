@@ -5,7 +5,6 @@ import com.example.payment_app.domain.entities.networkEntities.card.CardsApiEnti
 data class Transaction(
     val account: Account,
     val amount: Double,
-    val attachments: List<Attachment>,
     val card: CardsApiEntity?,
     val category: Any?,
     val completeDate: String,
