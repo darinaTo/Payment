@@ -16,12 +16,15 @@ interface PaymentDao {
     suspend fun insertAllTransaction(transaction: List<TransactionDbEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCard(cars : CardDbEntity)
+    suspend fun insertCard(cars: CardDbEntity)
 
-    /*SELECT * FROM `transaction` left join card on transactionId = transactionId" +
-            " where cardId =:cardId group by transactionId*/
+    @Query("SELECT DISTINCT * FROM card GROUP BY cardId")
+    fun getAllCards(): Flow<List<CardDbEntity>>
+
+    @Query("SELECT * FROM `transaction`")
+    fun getAllTransactions(): Flow<List<TransactionDbEntity>>
+
     @Transaction
-    @Query("SELECT * FROM `transaction` left join card on transactionId = transactionId" +
-            " where cardId =:cardId")
-     fun getTransactionByCardId(cardId : String) : Flow<List<PaymentFullInfo>>
+    @Query("SELECT * FROM `transaction`  WHERE cardId = :cardId")
+    fun getTransactionByCardId(cardId: String): Flow<List<PaymentFullInfo>>
 }

@@ -16,11 +16,11 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Singleton
     @Provides
-    fun provideDao(appDatabase: PaymentDatabase) : PaymentDao = appDatabase.paymentDao()
+    fun provideDao(appDatabase: PaymentDatabase): PaymentDao = appDatabase.paymentDao()
 
     @Singleton
     @Provides
-    fun provideAppDatabase(@ApplicationContext appContext: Context) : PaymentDatabase =
+    fun provideAppDatabase(@ApplicationContext appContext: Context): PaymentDatabase =
         Room.databaseBuilder(
             appContext,
             PaymentDatabase::class.java,

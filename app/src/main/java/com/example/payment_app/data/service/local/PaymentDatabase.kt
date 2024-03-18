@@ -10,5 +10,5 @@ import com.example.payment_app.domain.entities.dbEntities.TransactionDbEntity
     version = 1, exportSchema = false
 )
 abstract class PaymentDatabase : RoomDatabase() {
-    abstract fun paymentDao() : PaymentDao
+    abstract fun paymentDao(): PaymentDao
 }
