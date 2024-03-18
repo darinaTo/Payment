@@ -2,8 +2,8 @@ package com.example.payment_app.data.impl
 
 import com.example.payment_app.data.service.local.PaymentDao
 import com.example.payment_app.data.service.remote.PaymentApi
-import com.example.payment_app.domain.entities.dbEntities.PaymentFullInfo
 import com.example.payment_app.domain.entities.uiEntity.CardUiEntity
+import com.example.payment_app.domain.entities.uiEntity.FullInfoEntityUi
 import com.example.payment_app.domain.entities.uiEntity.TransactionUiEntity
 import com.example.payment_app.utils.mapToDbEntity
 import com.example.payment_app.utils.mapToUEntity
@@ -36,7 +36,7 @@ class PaymentRepository @Inject constructor(
                 if (flow.firstOrNull()?.isEmpty() == true) {
                     getCardList()
                 }
-            }.filterNotNull().map { it.mapToUiEntity() }
+            }.filterNotNull().map { it -> it.map { it.mapToUiEntity() } }
         }
 
     private suspend fun getCardList() {
@@ -56,9 +56,9 @@ class PaymentRepository @Inject constructor(
             _errorFlow.tryEmit(Error(ex))
     }
 
-    suspend fun getTransactionByCardID(cardId: String): Flow<List<PaymentFullInfo>> =
+    suspend fun getTransactionByCardID(cardId: String): Flow<List<FullInfoEntityUi>> =
         withContext(Dispatchers.IO) {
-            dao.getTransactionByCardId(cardId)
+            dao.getTransactionByCardId(cardId).map { it.mapToUiEntity() }
         }
 
 

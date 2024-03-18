@@ -2,6 +2,7 @@ package com.example.payment_app.utils
 
 import androidx.compose.ui.graphics.Color
 import com.example.payment_app.R
+import com.example.payment_app.domain.entities.uiEntity.FullInfoEntityUi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -15,13 +16,17 @@ fun String.formatDate(): String {
     return monthFormatter.format(date)
 }
 
-fun Double.chooseColor() : Color =
+fun Double.chooseColor(): Color =
     if (this < 0) Color.Black else Color.Green
 
 
-fun Double.refactorText() : String =
+fun Double.refactorText(): String =
     if (this > 0) "$${this}" else "-$${this.absoluteValue}"
 
-fun Double.chooseIcon(logo: String) : Any =
+fun Double.chooseIcon(logo: String): Any =
     if (this > 0) R.drawable.arrow_dwon_left else logo
+
+fun List<FullInfoEntityUi>.groupBy(): Map<String, List<FullInfoEntityUi>> =
+    this.groupBy { it.transactionInfo.createData }
+
 

@@ -1,10 +1,12 @@
 package com.example.payment_app.utils
 
 import com.example.payment_app.domain.entities.dbEntities.CardDbEntity
+import com.example.payment_app.domain.entities.dbEntities.PaymentFullInfo
 import com.example.payment_app.domain.entities.dbEntities.TransactionDbEntity
 import com.example.payment_app.domain.entities.networkEntities.card.CardsApiEntity
 import com.example.payment_app.domain.entities.networkEntities.transaction.Transaction
 import com.example.payment_app.domain.entities.uiEntity.CardUiEntity
+import com.example.payment_app.domain.entities.uiEntity.FullInfoEntityUi
 import com.example.payment_app.domain.entities.uiEntity.TransactionUiEntity
 
 
@@ -29,22 +31,29 @@ fun CardsApiEntity.mapToDbEntity(transactionId: String): CardDbEntity =
         name = cardName
     )
 
-fun List<CardDbEntity>.mapToUiEntity(): List<CardUiEntity> =
-    this.map {
-        CardUiEntity(
-            id = it.cardId,
-            logo = it.logo,
-            cardLast4 = it.last4,
-            cardName = it.name
-        )
-    }
+fun CardDbEntity.mapToUiEntity(): CardUiEntity =
+    CardUiEntity(
+        id = this.cardId,
+        logo = this.logo,
+        cardLast4 = this.last4,
+        cardName = this.name
+    )
+
 
 fun List<TransactionUiEntity>.mapToDbEntity(): List<TransactionDbEntity> =
     this.map { transaction ->
         TransactionDbEntity(
             id = transaction.id,
             amount = transaction.amount,
-            createData = transaction.createData,
+            createData = transaction.createData.formatDate(),
             carId = transaction.card.id
+        )
+    }
+
+fun List<PaymentFullInfo>.mapToUiEntity(): List<FullInfoEntityUi> =
+    this.map { info ->
+        FullInfoEntityUi(
+            transactionInfo = info.transaction,
+            card = info.card.mapToUiEntity()
         )
     }

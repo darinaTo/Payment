@@ -1,8 +1,10 @@
 package com.example.payment_app.domain.entities.uiEntity
 
+import com.example.payment_app.domain.entities.dbEntities.TransactionDbEntity
+
 data class FullInfoEntityUi (
-    val cardInfo : CardUiEntity,
-    val transactionInfo : TransactionUiEntity
+    val transactionInfo : TransactionDbEntity,
+    val card : CardUiEntity
 )
 
 
