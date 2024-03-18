@@ -1,8 +1,7 @@
 package com.example.payment_app.di
 
 import com.example.payment_app.data.constants.Constants.BASE_URL
-import com.example.payment_app.data.impl.PaymentRepository
-import com.example.payment_app.data.remote.PaymentApi
+import com.example.payment_app.data.service.remote.PaymentApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -33,8 +32,4 @@ object AppModule {
             .build()
             .create(PaymentApi::class.java)
     }
-
-    @Singleton
-    @Provides
-    fun providePaymentRepository(api: PaymentApi) = PaymentRepository(api)
 }
