@@ -19,6 +19,7 @@ object Constants {
         }
     )
 }
+
 val BOTTOM_NAV_ITEMS = listOf(
     BottomNavItem.Home, BottomNavItem.Transaction,
     BottomNavItem.Card, BottomNavItem.Accounts

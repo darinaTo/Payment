@@ -14,6 +14,6 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Singleton
     @Provides
-    fun providePaymentRepository(api: PaymentApi, dao: PaymentDao) = PaymentRepository(api,dao)
+    fun providePaymentRepository(api: PaymentApi, dao: PaymentDao) = PaymentRepository(api, dao)
 
 }

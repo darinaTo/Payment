@@ -37,10 +37,10 @@ fun Payment_appTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme =  if (darkTheme) {
+    val colorScheme = if (darkTheme) {
         DarkColorScheme
-    }
-        else  { LightColorScheme
+    } else {
+        LightColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {

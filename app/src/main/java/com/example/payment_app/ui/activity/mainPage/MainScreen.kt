@@ -3,12 +3,9 @@ package com.example.payment_app.ui.activity.mainPage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -57,7 +54,7 @@ import com.example.payment_app.utils.BottomNavItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    onIconTap : (String) -> Unit,
+    onIconTap: (String) -> Unit,
     viewModel: PaymentViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -184,34 +181,34 @@ fun BaseScreen(
 
 @Composable
 fun TopScreenPayment(modifier: Modifier) {
-    Box(
-        modifier = modifier
+    Column(
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        modifier = modifier.padding(14.dp)
     ) {
-        Column(modifier = Modifier.padding(14.dp)) {
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(painter = painterResource(R.drawable.united_states_of_america),
-                    contentDescription = "currency")
-                Text(
-                    text = "USD account",
-                    fontSize = 15.sp,
-                    modifier = Modifier.padding(6.dp),
-                    style = MaterialTheme.typography.labelLarge
-                )
-            }
-            //TODO:space by
-            Spacer(modifier = Modifier.height(6.dp))
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(R.drawable.united_states_of_america),
+                contentDescription = "currency"
+            )
             Text(
-                text = "$100,000",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.headlineMedium
+                text = "USD account",
+                fontSize = 15.sp,
+                modifier = Modifier.padding(6.dp),
+                style = MaterialTheme.typography.labelLarge
             )
         }
+        Text(
+            text = "$100,000",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineMedium
+        )
     }
 }
+
 
 @Composable
 fun CardsScreenPayment(modifier: Modifier, cards: List<CardUiEntity>, onIconTap: (String) -> Unit) {

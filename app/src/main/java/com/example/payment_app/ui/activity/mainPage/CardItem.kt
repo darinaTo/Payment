@@ -45,15 +45,18 @@ fun CardItem(cards: CardUiEntity, onIconTap: (String) -> Unit) {
             last4 = cards.cardLast4
         )
 
-        Text(text = cards.cardName,
+        Text(
+            text = cards.cardName,
             style = MaterialTheme.typography.labelLarge,
-            textAlign = TextAlign.Left)
+            textAlign = TextAlign.Left
+        )
         Spacer(Modifier.weight(1f))
         IconButton(onClick = { onIconTap(cards.id) }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                 contentDescription = "see detail",
-                tint = Grey)
+                tint = Grey
+            )
         }
     }
 

@@ -44,7 +44,11 @@ class PaymentViewModel @Inject constructor(
         val transaction = paymentRepository.getTransaction()
         if (transaction.isSuccess) {
             _uiState.update {
-                it.copy(status = Status.SUCCESS, transaction = transaction.getOrDefault(emptyList()))}
+                it.copy(
+                    status = Status.SUCCESS,
+                    transaction = transaction.getOrDefault(emptyList())
+                )
+            }
         } else {
             _uiState.update { it.copy(status = Status.ERROR) }
         }

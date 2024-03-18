@@ -48,13 +48,13 @@ class PaymentRepository @Inject constructor(
     }
 
     suspend fun getTransaction(): Result<List<TransactionUiEntity>> =
-         runCatching {
+        runCatching {
             api.getTransaction().transactions.mapToUEntity()
         }.onSuccess { transaction ->
             saveData(transaction)
         }.onFailure { ex ->
             _errorFlow.tryEmit(Error(ex))
-    }
+        }
 
     suspend fun getTransactionByCardID(cardId: String): Flow<List<FullInfoEntityUi>> =
         withContext(Dispatchers.IO) {

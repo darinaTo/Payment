@@ -67,9 +67,8 @@ fun CardScreen(
     ) {
         if (uiState.status == Status.LOADING) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-
         } else {
-            val card = listTransaction[1].card
+            val card = listTransaction.values.first()[0].card
             Scaffold(
                 topBar = {
                     CenterAlignedTopAppBar(
@@ -84,7 +83,6 @@ fun CardScreen(
                                     tint = Color.Black,
                                     modifier = Modifier
                                         .size(25.dp)
-
                                 )
                             }
                         }
@@ -134,7 +132,7 @@ fun TopBarScreen(card: CardUiEntity) {
 }
 
 @Composable
-fun CardSectionScreen(modifier: Modifier, listTransaction: List<FullInfoEntityUi>) {
+fun CardSectionScreen(modifier: Modifier, listTransaction: Map<String, List<FullInfoEntityUi>>) {
     Column(
         modifier = modifier
     ) {
@@ -172,7 +170,6 @@ fun DetailCardScreen() {
             )
         }
         DetailCardSecondPartScreen()
-
     }
 }
 
@@ -203,12 +200,12 @@ fun DetailCardSecondPartScreen() {
 }
 
 @Composable
-fun TransactionHistory(listTransaction: List<FullInfoEntityUi>) {
+fun TransactionHistory(listTransaction: Map<String, List<FullInfoEntityUi>>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
-            .clip(RoundedCornerShape(6.dp))
+            .clip(RoundedCornerShape(10.dp))
             .background(MaterialTheme.colorScheme.surface)
     ) {
         Box(
@@ -224,7 +221,6 @@ fun TransactionHistory(listTransaction: List<FullInfoEntityUi>) {
                 modifier = Modifier.align(Alignment.Center)
             )
         }
-
         TransactionHistoryItem(listTransaction = listTransaction)
     }
 }
